@@ -897,10 +897,14 @@ async function loadWhatsAppDigitsStrict(){
 
 /* Recalcular altura del header cuando aparece/desaparece el carrito */
 function recalcHeaderHeightDynamic(){
-  const hEl = document.querySelector('header');
-  if(!hEl) return;
-  const h = Math.max(70, Math.round(hEl.getBoundingClientRect().height));
-  document.documentElement.style.setProperty('--header-h', h + 'px');
+  // requestAnimationFrame asegura que el navegador ya dibujó el carrito 
+  // y el botón "Finalizar" antes de medir la altura real.
+  requestAnimationFrame(() => {
+    const hEl = document.querySelector('header');
+    if(!hEl) return;
+    const h = Math.max(70, Math.round(hEl.getBoundingClientRect().height));
+    document.documentElement.style.setProperty('--header-h', h + 'px');
+  });
 }
 
 /* =========================================================
