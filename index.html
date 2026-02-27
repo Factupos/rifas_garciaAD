@@ -386,15 +386,27 @@ body.search-has-text #raffles { display: none !important; }
 
 /* ====== MODAL CHECKOUT ====== */
 .modal-backdrop {
-  position: fixed; inset: 0; display: none; align-items: flex-end; justify-content: center;
-  background: rgba(0,0,0,0.8); z-index: 9999; padding: 16px; backdrop-filter: blur(8px);
+  position: fixed; inset: 0; display: none; 
+  align-items: center; /* 🔥 ESTA ES LA MAGIA: Centrado absoluto siempre */
+  justify-content: center;
+  background: rgba(0,0,0,0.85); z-index: 9999; padding: 20px; 
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-@media (min-width: 600px) { .modal-backdrop { align-items: center; } }
+
 .modal {
   width: min(500px, 100%); border-radius: 24px; overflow: hidden;
-  background: linear-gradient(180deg, #1A122B, #0D0814); border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+  background: linear-gradient(180deg, #1A122B, #0D0814); 
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.9), inset 0 2px 10px rgba(255,255,255,0.05);
+  /* Animación de entrada VIP */
+  animation: modalPopUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  transform: scale(0.95); opacity: 0;
 }
+
+@keyframes modalPopUp {
+  to { transform: scale(1); opacity: 1; }
+}
+
 .modal-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -404,9 +416,11 @@ body.search-has-text #raffles { display: none !important; }
   appearance: none; border: none; cursor: pointer;
   width: 36px; height: 36px; border-radius: 50%;
   background: rgba(255,255,255,0.08); color: #fff; font-weight: 600; font-size: 16px;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
-.modal-close:hover { background: rgba(255,255,255,0.15); }
+.modal-close:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+.modal-close:active { transform: scale(0.95); }
+
 .modal-body { padding: 24px; }
 .modal-body p { margin: 0 0 20px 0; color: var(--muted); font-size: 14px; font-weight: 500; }
 .form-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
@@ -417,6 +431,7 @@ body.search-has-text #raffles { display: none !important; }
   color: #fff; outline: none; transition: border 0.2s, box-shadow 0.2s;
 }
 .form-row input:focus { border-color: var(--brand-2); box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.15); }
+
 .modal-actions { display: flex; gap: 12px; padding: 0 24px 24px; }
 .btn-primary { background: linear-gradient(90deg, var(--brand-1), #FFF5B8); color: #111; box-shadow: 0 4px 15px rgba(255,215,0,0.2); }
 .btn-secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
