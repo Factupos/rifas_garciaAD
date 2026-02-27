@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <link rel="icon" href="data:,">
   <title>Pagina</title>
+  <link rel="icon" href="data:,">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, interactive-widget=overlays-content">
   <!-- Performance -->
   <link rel="preconnect" href="https://docs.google.com" crossorigin>
@@ -409,29 +409,6 @@ body.search-has-text #raffles{ display:none !important; } /* << solo mostrar sel
 .btn.ok{font-weight:900;border:none;border-radius:14px;padding:12px 18px;cursor:pointer;background:linear-gradient(90deg,var(--accent1),#a9ffdf);color:#062017}
 .btn.no{font-weight:900;border:none;border-radius:14px;padding:12px 18px;cursor:pointer;background:linear-gradient(90deg,#ff6b6b,#ffd0d0);color:#1a0606}
 
-/* ====== CHECKOUT (formulario compra) ====== */
-.checkoutRow{display:flex; flex-direction:column; gap:10px; margin-top:10px; text-align:left}
-.fld{display:flex; flex-direction:column; gap:6px}
-.fld label{font-size:12px; font-weight:900; letter-spacing:.3px; opacity:.92}
-.fld input{
-  height:52px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.10);
-  color:#fff;
-  padding:0 14px;
-  font-size:16px;
-  font-weight:800;
-  outline:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10), 0 10px 26px rgba(0,0,0,.35);
-}
-.fld input::placeholder{color:rgba(255,255,255,.65)}
-.fld input:focus{box-shadow:inset 0 0 0 2px var(--accent1),0 0 22px rgba(39,215,255,.25)}
-.smallNote{margin:10px 0 0; font-size:12px; opacity:.88; font-weight:750; line-height:1.35}
-.checkoutActions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px}
-.btn.primary{font-weight:1000;border:none;border-radius:14px;padding:12px 18px;cursor:pointer;background:linear-gradient(90deg,var(--accent3),var(--accent1));color:#052015;box-shadow:0 0 0 1px rgba(255,255,255,.22),0 10px 26px rgba(0,0,0,.5)}
-.btn.ghost{font-weight:1000;border-radius:14px;padding:12px 18px;cursor:pointer;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);color:#fff}
-
 /* Revelado del número */
 .raffle.revealed .num{animation:revealPop .6s cubic-bezier(.2,.9,.2,1)}
 @keyframes revealPop{0%{transform:scale(.9);filter:brightness(1.25);text-shadow:0 0 18px rgba(255,255,255,.55),0 0 30px rgba(0,255,169,.28)}55%{transform:scale(1.05)}100%{transform:scale(1);filter:none}}
@@ -673,6 +650,55 @@ body.search-has-text #raffles{ display:none !important; } /* << solo mostrar sel
   #raffles{gap:10px;margin-top:12px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+
+/* ====== CHECKOUT MODAL ====== */
+.modal-backdrop{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.66); z-index:9999; padding:16px;
+}
+.modal{
+  width:min(520px, 100%); border-radius:18px; overflow:hidden;
+  background:linear-gradient(180deg, rgba(14,18,36,.98), rgba(8,10,20,.98));
+  box-shadow:0 20px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.10);
+}
+.modal-header{display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid rgba(255,255,255,.08)}
+.modal-header h3{margin:0; font-size:14px; letter-spacing:.3px; text-transform:uppercase}
+.modal-close{
+  appearance:none; border:none; cursor:pointer;
+  width:36px; height:36px; border-radius:12px;
+  background:rgba(255,255,255,.08); color:#fff; font-weight:900;
+}
+.modal-body{padding:16px 18px}
+.modal-body p{margin:0 0 12px 0; opacity:.9; font-size:13px}
+.form-row{display:flex; flex-direction:column; gap:8px; margin-bottom:12px}
+.form-row label{font-size:12px; opacity:.9; font-weight:800; letter-spacing:.2px}
+.form-row input{
+  height:46px; border-radius:14px; padding:0 14px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);
+  color:#fff; outline:none;
+}
+.form-row input:focus{border-color:rgba(39,215,255,.55); box-shadow:0 0 0 3px rgba(39,215,255,.12)}
+.modal-actions{display:flex; gap:10px; padding:14px 18px 18px}
+.btn{
+  height:46px; border-radius:14px; padding:0 14px; font-weight:900; letter-spacing:.4px;
+  border:none; cursor:pointer; flex:1; text-transform:uppercase;
+}
+.btn-secondary{background:rgba(255,255,255,.10); color:#fff}
+.btn-primary{background:linear-gradient(90deg,var(--accent3),var(--accent1)); color:#062017}
+.modal-small{font-size:12px; opacity:.85; margin-top:8px}
+.loading-screen{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.72); z-index:10000; padding:18px; text-align:center;
+}
+.loading-card{
+  width:min(420px, 100%); border-radius:18px; padding:18px;
+  background:rgba(12,16,32,.98);
+  box-shadow:0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.10);
+}
+.loading-card h4{margin:0 0 10px 0; font-size:14px; text-transform:uppercase; letter-spacing:.35px}
+.loading-card p{margin:0; opacity:.85; font-size:13px}
+
 </style>
 
 </head>
@@ -748,40 +774,6 @@ body.search-has-text #raffles{ display:none !important; } /* << solo mostrar sel
         <button id="no" class="btn no" type="button">No</button>
       </div>
     </div>
-
-  <!-- ✅ Checkout (Nombre + Teléfono) -->
-  <div id="ovCheckout" class="ov" aria-hidden="true">
-    <div class="box" role="dialog" aria-modal="true">
-      <p class="q" id="checkoutTitle">Finalizar compra</p>
-      <div class="checkoutRow">
-        <div class="fld">
-          <label for="buyerName">Nombre del participante</label>
-          <input id="buyerName" type="text" autocomplete="name" autocapitalize="words" spellcheck="false" placeholder="Ej: Juan Pérez">
-        </div>
-        <div class="fld">
-          <label for="buyerPhone">Teléfono (celular)</label>
-          <input id="buyerPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Ej: 3XXXXXXXXX">
-        </div>
-        <p class="smallNote" id="checkoutSummary"></p>
-      </div>
-      <div class="checkoutActions">
-        <button id="checkoutConfirm" class="btn primary" type="button">Finalizar</button>
-        <button id="checkoutCancel" class="btn ghost" type="button">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ Resultado -->
-  <div id="ovResult" class="ov" aria-hidden="true">
-    <div class="box" role="dialog" aria-modal="true">
-      <p class="q" id="resultTitle">Resultado</p>
-      <p class="smallNote" id="resultText" style="text-align:center"></p>
-      <div class="checkoutActions">
-        <button id="resultReload" class="btn primary" type="button">Seguir comprando</button>
-      </div>
-    </div>
-  </div>
-
   </div>
 
   <!-- Mensajes -->
@@ -789,6 +781,8 @@ body.search-has-text #raffles{ display:none !important; } /* << solo mostrar sel
   <div id="loadingMessage" class="loading-message">Buscando número aleatorio...</div>
 
   <script>
+  const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbz522NWZJc4hjtuRNObFA77rW2zw7Kj43YhCGwRB2yhV6M6vwn2EeLjvbI7xmjCzyfmwQ/exec';
+
 /* =========================================================
    ✅ CONFIG (VISIBLES AL INICIO — como pediste)
    ========================================================= */
@@ -797,13 +791,6 @@ const GID_RAFFLES = '1661661343';   // A: Número, B: Libre/Asignado
 const GID_CONFIG  = '1977832725';    // Config_Publica
 const GID_NOTIFICATIONS = '662101636'; // Notificaciones (logo)
 const PROXY = 'https://csv-proxy.jeisendigital.workers.dev/?u=';
-
-/* =========================================================
-   ✅ ESCRITURA (Apps Script WebApp)
-   - Pega aquí la URL de tu WebApp (Deploy > New deployment > Web app)
-   - Debe responder CORS y aceptar POST JSON
-   ========================================================= */
-const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbz522NWZJc4hjtuRNObFA77rW2zw7Kj43YhCGwRB2yhV6M6vwn2EeLjvbI7xmjCzyfmwQ/exec'; // <-- pega tu URL /exec
 
 /* =========================================================
    ✅ LECTURAS ESPECIALES
@@ -1285,186 +1272,11 @@ function openWA(payload){
   if (!w){ location.href = url; }
 }
 
-/* =========================================================
-   ✅ CHECKOUT (Nombre + Teléfono) + Envío a Apps Script
-   ========================================================= */
-function normalizeBuyerPhone(raw){
-  const s = String(raw||'').trim();
-  // Reusar extractor (devuelve 57+10 cuando puede)
-  const d = extractColombiaDigits(s);
-  if(d && /^57\d{10}$/.test(d)) return d;
-  // Si viene como 10 dígitos 3XXXXXXXXX
-  const only = (s.match(/\d+/g)||[]).join('');
-  if(/^3\d{9}$/.test(only)) return '57' + only;
-  // Si viene como 57 + 10 dígitos sin separadores
-  if(/^57\d{10}$/.test(only)) return only;
-  return null;
-}
-function formatListHuman(list){
-  return list.map((n,i)=> `${i+1}. ${pad4(n)}`).join('\n');
-}
-function showCheckoutModal(numbers){
-  const ov = document.getElementById('ovCheckout');
-  const nameEl = document.getElementById('buyerName');
-  const phoneEl = document.getElementById('buyerPhone');
-  const sum = document.getElementById('checkoutSummary');
-  const confirmBtn = document.getElementById('checkoutConfirm');
-  const cancelBtn = document.getElementById('checkoutCancel');
-
-  if(!ov || !nameEl || !phoneEl || !sum || !confirmBtn || !cancelBtn){
-    msg('Falta UI de checkout', true);
-    return;
-  }
-
-  const unique = Array.from(new Set(numbers.map(pad4)));
-  sum.textContent = `Vas a registrar ${unique.length} boleta${unique.length>1?'s':''}: ${unique.join(', ')}.`;
-
-  // Reset
-  nameEl.value = '';
-  phoneEl.value = '';
-  ov.classList.add('show');
-  ov.setAttribute('aria-hidden','false');
-  MODAL_OPEN = true;
-
-  // UX: enfocar nombre
-  setTimeout(()=>{ try{ nameEl.focus({preventScroll:true}); }catch(_){} }, 0);
-
-  const close = ()=>{
-    MODAL_OPEN=false;
-    ov.classList.remove('show');
-    ov.setAttribute('aria-hidden','true');
-  };
-
-  cancelBtn.onclick = (e)=>{ e.preventDefault(); e.stopPropagation(); close(); };
-
-  ov.onclick = ()=> close();
-  ov.querySelector('.box')?.addEventListener('click', (e)=> e.stopPropagation(), {once:true});
-
-  confirmBtn.onclick = async (e)=>{
-    e.preventDefault(); e.stopPropagation();
-
-    const buyerName = String(nameEl.value||'').trim();
-    const phone = normalizeBuyerPhone(phoneEl.value);
-
-    if(!buyerName || buyerName.length < 3){
-      msg('Escribe un nombre válido', true);
-      try{ nameEl.focus({preventScroll:true}); }catch(_){}
-      return;
-    }
-    if(!phone){
-      msg('Teléfono inválido (usa 3XXXXXXXXX)', true);
-      try{ phoneEl.focus({preventScroll:true}); }catch(_){}
-      return;
-    }
-
-    close();
-    await submitPurchase(unique, buyerName, phone);
-  };
-}
-
-async function submitPurchase(numbers, buyerName, buyerPhone57){
-  if(!Array.isArray(numbers) || !numbers.length){
-    msg('No hay boletas para registrar', true);
-    return;
-  }
-  if(!APPS_SCRIPT_WEBAPP_URL || APPS_SCRIPT_WEBAPP_URL.includes('PASTE_YOUR_WEBAPP_URL')){
-    showResult(false, 'Falta configurar APPS_SCRIPT_WEBAPP_URL en el HTML.');
-    return;
-  }
-
-  // UI: pantalla de carga
-  bootShow();
-  bootSet(18, 'Registrando…', 'Guardando en Google Sheets');
-  const start = Date.now();
-
-  try{
-    const res = await fetch(APPS_SCRIPT_WEBAPP_URL, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type':'text/plain;charset=utf-8' },
-      body: JSON.stringify({
-        action: 'reserve',
-        sheet: 'Numero_De_Rifas',
-        numbers,
-        name: buyerName,
-        phone: buyerPhone57
-      })
-    });
-
-    const txt = await res.text();
-    let data = null;
-    try{ data = JSON.parse(txt); }catch(_){ data = { ok:false, error:'Respuesta no JSON: ' + txt.slice(0,160) }; }
-
-    if(!res.ok || !data || data.ok !== true){
-      const err = (data && (data.error || data.message)) ? String(data.error || data.message) : ('HTTP ' + res.status);
-      showResult(false, 'No se pudo registrar la compra.\n\nDetalle: ' + err);
-      return;
-    }
-
-    // Marcar localmente como ocupado (mejor UX incluso antes de recargar)
-    numbers.forEach(n=>{
-      const p = pad4(n);
-      ALL[p] = 'ocupado';
-      setTileSelected(p, false);
-    });
-
-    // Vaciar carrito
-    CART_ITEMS = [];
-    CART_ACTIVE = false;
-    document.body.classList.remove('cart-active');
-    renderCart();
-    updateTopFinishVisibility();
-
-    const ms = Date.now() - start;
-    const upd = Array.isArray(data.updated) ? data.updated.length : (data.updatedCount ?? numbers.length);
-    showResult(true, `Compra registrada con éxito.\n\nBoletas: ${numbers.join(', ')}\nRegistradas: ${upd}\nTiempo: ${ms} ms`);
-  }catch(err){
-    showResult(false, 'Error de conexión al registrar.\n\nDetalle: ' + (err?.message || err));
-  }finally{
-    // siempre ocultar boot
-    bootSet(95, 'Finalizando…', 'Listo');
-    setTimeout(()=> bootHide(), 220);
-  }
-}
-
-function showResult(ok, text){
-  const ov = document.getElementById('ovResult');
-  const title = document.getElementById('resultTitle');
-  const body = document.getElementById('resultText');
-  const btn = document.getElementById('resultReload');
-  if(!ov || !title || !body || !btn){
-    msg(ok ? 'Registrado' : 'Error', !ok);
-    return;
-  }
-  title.textContent = ok ? '¡Compra registrada!' : 'No se pudo registrar';
-  body.textContent = String(text||'').trim();
-
-  ov.classList.add('show');
-  ov.setAttribute('aria-hidden','false');
-  MODAL_OPEN = true;
-
-  const close = ()=>{
-    MODAL_OPEN=false;
-    ov.classList.remove('show');
-    ov.setAttribute('aria-hidden','true');
-  };
-
-  btn.onclick = ()=>{
-    close();
-    // Forzar recarga para traer disponibilidad REAL actualizada
-    location.reload();
-  };
-
-  ov.onclick = ()=>{ /* no cerrar fuera, para obligar decisión */ };
-  ov.querySelector('.box')?.addEventListener('click', (e)=> e.stopPropagation(), {once:true});
-}
-
-
 /* Carrito */
 function updateTopFinishVisibility(){
   const btn = document.getElementById('finishTop');
   if(!btn) return;
-  if (CART_ITEMS.length){
+  if (CART_ACTIVE && CART_ITEMS.length){
     btn.style.display = 'inline-flex';
   } else {
     btn.style.display = 'none';
@@ -1555,25 +1367,133 @@ function removeFromCart(num){
   renderCart();
   updateTopFinishVisibility();
 }
+
 function finalizeCart(){
   if(!CART_ITEMS.length){
     msg('No hay números en el carrito', true);
     return;
   }
   const unique = Array.from(new Set(CART_ITEMS.map(pad4)));
-
-  // Seguridad: si el mapa dice que ya no está libre, no dejamos enviar
-  const notFree = unique.filter(n => (ALL?.[n] && ALL[n] !== 'libre'));
-  if(notFree.length){
-    msg('Algunas boletas ya no están disponibles: ' + notFree.join(', '), true);
-    // quitar del carrito las no libres
-    notFree.forEach(removeFromCart);
-    return;
-  }
-
-  // Abrir formulario (nombre + teléfono)
-  showCheckoutModal(unique);
+  // Limpia selección visual (por si vuelves a la página)
+  unique.forEach(n => setTileSelected(n, false));
+  openCheckoutModal(unique);
 }
+let CHECKOUT_NUMBERS = [];
+
+function openCheckoutModal(numbers){
+  CHECKOUT_NUMBERS = numbers.slice();
+  const bd = document.getElementById('checkoutBackdrop');
+  const sum = document.getElementById('checkoutSummary');
+  const name = document.getElementById('checkoutName');
+  const phone = document.getElementById('checkoutPhone');
+
+  if(sum) sum.textContent = `Boletas seleccionadas: ${numbers.join(', ')}`;
+  if(name) name.value = '';
+  if(phone) phone.value = '';
+  if(bd){ bd.style.display='flex'; }
+  setTimeout(()=>{ if(name) name.focus(); }, 50);
+}
+
+function closeCheckoutModal(){
+  const bd = document.getElementById('checkoutBackdrop');
+  if(bd) bd.style.display='none';
+}
+
+function showLoading(title, text){
+  const scr = document.getElementById('loadingScreen');
+  const t = document.getElementById('loadingTitle');
+  const p = document.getElementById('loadingText');
+  const btn = document.getElementById('loadingContinue');
+  if(t) t.textContent = title || 'Procesando…';
+  if(p) p.textContent = text || '';
+  if(btn) btn.style.display='none';
+  if(scr) scr.style.display='flex';
+}
+
+function showResult(ok, message){
+  const scr = document.getElementById('loadingScreen');
+  const t = document.getElementById('loadingTitle');
+  const p = document.getElementById('loadingText');
+  const btn = document.getElementById('loadingContinue');
+  if(t) t.textContent = ok ? 'Registro exitoso' : 'No se pudo registrar';
+  if(p) p.textContent = message || (ok ? 'Compra registrada correctamente.' : 'Ocurrió un error.');
+  if(btn) btn.style.display='block';
+  if(scr) scr.style.display='flex';
+}
+
+function hideLoading(){
+  const scr = document.getElementById('loadingScreen');
+  if(scr) scr.style.display='none';
+}
+
+function normalizePhoneLocal_(raw){
+  let s = String(raw||'').trim();
+  s = s.replace(/[^\d]/g,'');
+  if(s.length===10) return '57'+s;
+  if(s.length===12 && s.startsWith('57')) return s;
+  return null;
+}
+
+async function submitCheckout(){
+  const nameEl = document.getElementById('checkoutName');
+  const phoneEl = document.getElementById('checkoutPhone');
+  const name = (nameEl ? nameEl.value : '').trim();
+  const phoneNorm = normalizePhoneLocal_(phoneEl ? phoneEl.value : '');
+
+  if(name.length < 2){ msg('Escribe un nombre válido', true); if(nameEl) nameEl.focus(); return; }
+  if(!phoneNorm){ msg('Teléfono inválido. Usa 10 dígitos (Ej: 3001234567)', true); if(phoneEl) phoneEl.focus(); return; }
+  if(!CHECKOUT_NUMBERS.length){ msg('No hay boletas seleccionadas', true); return; }
+
+  closeCheckoutModal();
+  showLoading('Registrando compra…', 'Guardando datos en el sistema.');
+
+  try{
+    const payload = {
+      action: 'reserve',
+      sheet: 'Numero_De_Rifas',
+      numbers: CHECKOUT_NUMBERS,
+      name,
+      phone: phoneNorm
+    };
+
+    const resp = await fetch(APPS_SCRIPT_WEBAPP_URL, {
+      method: 'POST',
+      mode: 'cors',
+      // IMPORTANT: text/plain evita preflight OPTIONS
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload)
+    });
+
+    const data = await resp.json().catch(()=>null);
+
+    if(!resp.ok){
+      showResult(false, `HTTP ${resp.status}. ${data && data.message ? data.message : 'Error al guardar.'}`);
+      return;
+    }
+
+    if(!data || data.ok !== true){
+      const msgErr = (data && data.message) ? data.message : 'No se pudo registrar.';
+      showResult(false, msgErr);
+      return;
+    }
+
+    // Limpia carrito y refresca disponibilidad
+    CART_ITEMS = [];
+    CART_ACTIVE = false;
+    document.body.classList.remove('cart-active');
+    renderCart();
+    updateTopFinishVisibility();
+
+    // Refresca mapa y grid
+    await syncMapFast();
+    renderGrid();
+
+    showResult(true, 'Compra registrada correctamente.');
+  }catch(err){
+    showResult(false, String(err && err.message ? err.message : err));
+  }
+}
+
 
 function makeTile(num, large){
   const el = document.createElement('div');
@@ -1897,9 +1817,7 @@ function showChoiceFromTile(tile, n){
       finalizeCart();
     }else{
       closeBox(true);
-      addToCart(n);
-      msg('Agregado al carrito: ' + n, false);
-      
+      openWA(n);
     }
   };
   no.onclick = (e)=>{ e.preventDefault(); e.stopPropagation(); closeBox(false); };
@@ -2076,22 +1994,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     randomBtn.dataset.busy='';
   },{passive:true});
 
-  
-  // ✅ Fail-safe: delegación de clicks (por si algún overlay o re-render borra listeners)
-  document.addEventListener('click', (ev)=>{
-    const t = ev.target;
-    if(!t) return;
-    if(t.id === 'finishTop'){
-      ev.preventDefault();
-      finalizeCart();
-    }
-    if(t.id === 'checkoutConfirm'){
-      // Si por alguna razón se perdió el onclick, reinyectamos acción mínima:
-      // (El onclick real se asigna en showCheckoutModal; esto es solo respaldo)
-      // No hacemos nada aquí si el modal no está abierto.
-    }
-  }, {capture:true});
-
   // Botón FINALIZAR (superior)
   const finishTopBtn = document.getElementById('finishTop');
   if(finishTopBtn){
@@ -2101,7 +2003,36 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     });
   }
 
-  // ARRANQUE EXPRESS (con boot)
+  
+
+  // Checkout modal events
+  const bd = document.getElementById('checkoutBackdrop');
+  const closeBtn = document.getElementById('checkoutClose');
+  const cancelBtn = document.getElementById('checkoutCancel');
+  const submitBtn = document.getElementById('checkoutSubmit');
+  const continueBtn = document.getElementById('loadingContinue');
+
+  if(closeBtn) closeBtn.addEventListener('click', ()=>closeCheckoutModal());
+  if(cancelBtn) cancelBtn.addEventListener('click', ()=>closeCheckoutModal());
+  if(submitBtn) submitBtn.addEventListener('click', ()=>submitCheckout());
+  if(continueBtn) continueBtn.addEventListener('click', ()=>{
+    hideLoading();
+    // Recarga completa para asegurar números actualizados
+    location.reload();
+  });
+
+  if(bd){
+    bd.addEventListener('click',(e)=>{
+      if(e.target === bd) closeCheckoutModal();
+    });
+  }
+
+  // Enter para enviar
+  const phoneEl = document.getElementById('checkoutPhone');
+  const nameEl = document.getElementById('checkoutName');
+  if(nameEl) nameEl.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); submitCheckout(); }});
+  if(phoneEl) phoneEl.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); submitCheckout(); }});
+// ARRANQUE EXPRESS (con boot)
   bootSet(60, 'Cargando boletas…', 'Usando caché para abrir ultra rápido');
   DAY_MARK=todayKey();
 
@@ -2136,5 +2067,42 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   }, 20000);
 });
   </script>
+
+  <!-- ====== CHECKOUT MODAL ====== -->
+  <div id="checkoutBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="checkoutTitle">Finalizar compra</h3>
+        <button id="checkoutClose" class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="checkoutSummary"></p>
+        <div class="form-row">
+          <label for="checkoutName">Nombre del participante</label>
+          <input id="checkoutName" type="text" autocomplete="name" placeholder="Ej: Juan Pérez" />
+        </div>
+        <div class="form-row">
+          <label for="checkoutPhone">Teléfono (10 dígitos)</label>
+          <input id="checkoutPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Ej: 3001234567" />
+          <div class="modal-small">Se guardará como 57XXXXXXXXXX.</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="checkoutCancel" class="btn btn-secondary" type="button">Cancelar</button>
+        <button id="checkoutSubmit" class="btn btn-primary" type="button">Finalizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== LOADING / RESULT ====== -->
+  <div id="loadingScreen" class="loading-screen" role="status" aria-live="polite">
+    <div class="loading-card">
+      <h4 id="loadingTitle">Registrando compra…</h4>
+      <p id="loadingText">Por favor espera un momento.</p>
+      <div style="height:14px"></div>
+      <button id="loadingContinue" class="btn btn-primary" type="button" style="display:none">Seguir comprando</button>
+    </div>
+  </div>
+
 </body>
 </html>
