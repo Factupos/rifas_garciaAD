@@ -1600,10 +1600,14 @@ function onTileTap(el, num, pt){
     return;
   }
 
-  // Ya estaba seleccionada
+  // 🔥 NUEVA LÓGICA UX: Si ya estaba seleccionada, la retiramos con un solo toque
   if(CART_ITEMS.includes(n)){
-    setTileSelected(n, true);
-    msg('Ya está en el carrito: ' + n, false);
+    removeFromCart(n);
+    msg('Boleta retirada: ' + n, false);
+    
+    // Micro-interacción: Pequeño efecto de "hundimiento" al desmarcar
+    el.style.transform = 'scale(0.95)';
+    setTimeout(() => { el.style.transform = ''; }, 150);
     return;
   }
 
@@ -1615,13 +1619,13 @@ function onTileTap(el, num, pt){
   const cx=((pt?.x ?? (rect.left+rect.width/2)) - rect.left)*dpr;
   const cy=((pt?.y ?? (rect.top+rect.height/2))  - rect.top )*dpr;
 
-  // Efecto suave + rápido (no bloquea)
+  // Efecto visual premium (Onda de luz)
   playWaterRipple(el, 900, {x:cx,y:cy})
     .finally(()=>{ el.dataset.busy=''; });
 
-  // ✅ Directo al carrito (sin ventana)
+  // ✅ Directo al carrito
   addToCart(n);
-  msg('Agregado al carrito: ' + n, false);
+  msg('Agregada al carrito: ' + n, false);
 }
 
 /* =========================
