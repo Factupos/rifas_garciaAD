@@ -1589,9 +1589,27 @@ function showChoiceFromTile(tile, n){
   box.onclick=(e)=> e.stopPropagation();
 }
 function onTileTap(el, num, pt){
-  if(!el || el.dataset.busy==='1') return;
+  if(!el) return;
 
   const n = pad4(num);
+
+  // 🔥 1. DESMARCAR AL INSTANTE (Bypass del bloqueo de animación)
+  // Si ya está en el carrito, la quitamos sin importar si hay animaciones corriendo.
+  if(CART_ITEMS.includes(n)){
+    removeFromCart(n);
+    msg('Boleta retirada', false);
+    
+    // Micro-interacción: Pequeño efecto de "hundimiento" al desmarcar
+    el.style.transform = 'scale(0.95)';
+    setTimeout(() => { el.style.transform = ''; }, 150);
+    
+    // Liberamos el botón inmediatamente por si el usuario hace doble clic súper rápido
+    el.dataset.busy = ''; 
+    return;
+  }
+
+  // 🔥 2. BLOQUEO DE ANIMACIÓN (Solo aplica al agregar)
+  if(el.dataset.busy === '1') return;
 
   // Si el mapa dice que está ocupada, no permitimos agregar
   const st = ALL?.[n];
@@ -1600,32 +1618,21 @@ function onTileTap(el, num, pt){
     return;
   }
 
-  // 🔥 NUEVA LÓGICA UX: Si ya estaba seleccionada, la retiramos con un solo toque
-  if(CART_ITEMS.includes(n)){
-    removeFromCart(n);
-    msg('Boleta retirada: ' + n, false);
-    
-    // Micro-interacción: Pequeño efecto de "hundimiento" al desmarcar
-    el.style.transform = 'scale(0.95)';
-    setTimeout(() => { el.style.transform = ''; }, 150);
-    return;
-  }
-
-  el.dataset.busy='1';
+  el.dataset.busy = '1';
   hideMsg();
 
-  const rect=el.getBoundingClientRect();
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  const cx=((pt?.x ?? (rect.left+rect.width/2)) - rect.left)*dpr;
-  const cy=((pt?.y ?? (rect.top+rect.height/2))  - rect.top )*dpr;
+  const rect = el.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio||1,2);
+  const cx = ((pt?.x ?? (rect.left+rect.width/2)) - rect.left)*dpr;
+  const cy = ((pt?.y ?? (rect.top+rect.height/2))  - rect.top )*dpr;
 
-  // Efecto visual premium (Onda de luz)
+  // El efecto visual premium corre en segundo plano sin interrumpir
   playWaterRipple(el, 900, {x:cx,y:cy})
     .finally(()=>{ el.dataset.busy=''; });
 
-  // ✅ Directo al carrito
+  // ✅ Agregado instantáneo a nivel lógico
   addToCart(n);
-  msg('Agregada al carrito: ' + n, false);
+  msg('Agregada al carrito', false);
 }
 
 /* =========================
