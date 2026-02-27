@@ -1464,7 +1464,7 @@ function showResult(ok, text){
 function updateTopFinishVisibility(){
   const btn = document.getElementById('finishTop');
   if(!btn) return;
-  if (CART_ACTIVE && CART_ITEMS.length){
+  if (CART_ITEMS.length){
     btn.style.display = 'inline-flex';
   } else {
     btn.style.display = 'none';
@@ -1556,7 +1556,7 @@ function removeFromCart(num){
   updateTopFinishVisibility();
 }
 function finalizeCart(){
-  if(!CART_ACTIVE || !CART_ITEMS.length){
+  if(!CART_ITEMS.length){
     msg('No hay números en el carrito', true);
     return;
   }
@@ -2075,6 +2075,22 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     if(st==='libre'){ renderSearchOne(chosen); } else { clearSearchLayer(); msg('Boleta ocupada', true); }
     randomBtn.dataset.busy='';
   },{passive:true});
+
+  
+  // ✅ Fail-safe: delegación de clicks (por si algún overlay o re-render borra listeners)
+  document.addEventListener('click', (ev)=>{
+    const t = ev.target;
+    if(!t) return;
+    if(t.id === 'finishTop'){
+      ev.preventDefault();
+      finalizeCart();
+    }
+    if(t.id === 'checkoutConfirm'){
+      // Si por alguna razón se perdió el onclick, reinyectamos acción mínima:
+      // (El onclick real se asigna en showCheckoutModal; esto es solo respaldo)
+      // No hacemos nada aquí si el modal no está abierto.
+    }
+  }, {capture:true});
 
   // Botón FINALIZAR (superior)
   const finishTopBtn = document.getElementById('finishTop');
