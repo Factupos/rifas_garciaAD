@@ -540,7 +540,7 @@ body.search-has-text #raffles { display: none !important; }
   <div id="loadingMessage" class="loading-message">Buscando número aleatorio...</div>
 
   <script>
-  const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzgUxba4lOWJ-ABSXBRnCWVgNfqVYOzc6JpQEN4P8zjMBG_C8qDDX9aGh9lytIBzFaR6g/exec';
+  const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxicnVSfYvr7VtKLryyhu9H1aeu-uKSR9gHRj3hNms05R1NaYhGsfhYOzXSLhJaKdU_ng/exec';
 
 /* =========================================================
    ✅ CONFIG (VISIBLES AL INICIO — como pediste)
@@ -1189,18 +1189,23 @@ function hideLoading(){
   if(scr) scr.style.display='none';
 }
 
-function normalizePhoneLocal_(raw){
-  let s = String(raw||'').trim();
-  // Permitimos que el frontend envíe el + si el usuario lo escribió
-  s = s.replace(/[^\d+]/g,''); 
+function normalizePhoneLocal_(raw) {
+  let s = String(raw || '').trim();
   
-  // Si son 10 dígitos puros, le ponemos el 57
-  if(/^\d{10}$/.test(s)) return '57' + s; [cite: 345]
+  // Permitir dígitos y el signo +
+  s = s.replace(/[^\d+]/g, '');
   
-  // Si ya tiene el + o es un formato internacional largo, lo dejamos pasar
-  if(s.length >= 10) return s; 
+  // Si son 10 dígitos puros, asumimos Colombia y ponemos 57
+  if (/^\d{10}$/.test(s)) {
+    return '57' + s;
+  }
+  
+  // Si tiene el + o ya tiene código de país, validamos longitud mínima
+  if (s.length >= 10) {
+    return s;
+  }
 
-  return null; [cite: 345]
+  return null;
 }
 
 async function submitCheckout(){
