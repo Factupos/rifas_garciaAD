@@ -540,7 +540,7 @@ body.search-has-text #raffles { display: none !important; }
   <div id="loadingMessage" class="loading-message">Buscando número aleatorio...</div>
 
   <script>
-  const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyYaYSAQ_2hxWxet9mTTnhl13RhsCgiLc87Jlxl5MEPP2nhiouF2C-aDfmE2U_vAdSYsA/exec';
+  const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzgUxba4lOWJ-ABSXBRnCWVgNfqVYOzc6JpQEN4P8zjMBG_C8qDDX9aGh9lytIBzFaR6g/exec';
 
 /* =========================================================
    ✅ CONFIG (VISIBLES AL INICIO — como pediste)
@@ -1191,10 +1191,16 @@ function hideLoading(){
 
 function normalizePhoneLocal_(raw){
   let s = String(raw||'').trim();
-  s = s.replace(/[^\d]/g,'');
-  if(s.length===10) return '57'+s;
-  if(s.length===12 && s.startsWith('57')) return s;
-  return null;
+  // Permitimos que el frontend envíe el + si el usuario lo escribió
+  s = s.replace(/[^\d+]/g,''); 
+  
+  // Si son 10 dígitos puros, le ponemos el 57
+  if(/^\d{10}$/.test(s)) return '57' + s; [cite: 345]
+  
+  // Si ya tiene el + o es un formato internacional largo, lo dejamos pasar
+  if(s.length >= 10) return s; 
+
+  return null; [cite: 345]
 }
 
 async function submitCheckout(){
